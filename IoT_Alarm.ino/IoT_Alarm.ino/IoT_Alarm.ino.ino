@@ -1,9 +1,10 @@
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
+#include <Wire.h>
 
 // Keypad Setup
 const byte ROWS = 4;
-const byte COLS = 4;
+const byte COLS = 3;
 char hexaKeys[ROWS][COLS] = {
   {'1', '2', '3'},
   {'4', '5', '6'},
@@ -15,8 +16,8 @@ char hexaKeys[ROWS][COLS] = {
 int red = 1, blue = 2, green = 3; // LED
 int echo = 4, trig = 5; // Ping Sensor
 int buzz = 6; // Buzzer
-byte rowPins[ROWS] = {10, 9, 8, 7};
-byte colPins[COLS] = {13, 12, 11};
+byte rowPins[ROWS] = {13, 12, 11, 10};
+byte colPins[COLS] = {9, 8, 7};
 
 // Analog
 LiquidCrystal_I2C lcd(0x27,16,2); // LCD Screen
@@ -44,13 +45,37 @@ void setup() {
   
 }
 
-void loop() {
-  lcd.print("Press * to Arm");
-  lcd.setCursor(0,1);
-  lcd.print("the Alarm");
-  delay(1500);
-  lcd.clear();
-  delay(500);
+void loop() { 
+  //Keypad base
+  char customKey = newpad.getKey();
+  if(customKey) Serial.println(customKey);
+  
+   // if(customKey != '*'){
+    //  lcd.print("Press * to Arm");
+    //  lcd.setCursor(0,1);
+    //  lcd.print("the Alarm");
+     // delay(1500);
+    //  lcd.clear();
+     // delay(500);
+    // }
+  //Ping Sensor base
+  int duration, distance;
+  digitalWrite(trig,LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+  duration = pulseIn(echo,HIGH);
+  distance = (duration/2)/29.1;
+   if(distance <= 10){
+    //Buzzer base
+    tone(buzz,1200);
+    noTone(buzz);
+    digitalWrite(red,HIGH);
+   }else{
+    digitalWrite(red,LOW);
+   }
+
 }
   //LCD Screen base
   //lcd.setCursor(0,0);
@@ -60,16 +85,4 @@ void loop() {
   //char customKey = customKeypad.getKey();
   //if(customKey) Serial.println(customKey);
 
-  //Ping Sensor base
-  //int duration, distance;
-  //digitalWrite(trig,LOW);
-  //delayMicroseconds(2);
-  //digitalWrite(trig,HIGH);
-  //delayMicroseconds(10);
-  //digitalWrite(trig,LOW);
-  //duration = pulseIn(echo,HIGH);
-  //distance = (duration/2)/29.1;
-  
-  //Buzzer base
-  //tone(buzz,1200);
-  //noTone(buzz);
+ 
