@@ -3,7 +3,7 @@
 
 // Keypad Setup
 const byte ROWS = 4;
-const byte COLS = 4;
+const byte COLS = 3;
 char hexaKeys[ROWS][COLS] = {
   {'1', '2', '3'},
   {'4', '5', '6'},
@@ -12,15 +12,15 @@ char hexaKeys[ROWS][COLS] = {
 };
 
 // Digital
-int red = 0, blue = 1, green = 2; // LED
-int echo = 3, trig = 4; // Ping Sensor
-int buzz = 5; // Buzzer
-byte rowPins[ROWS] = {9, 8, 7, 6};
-byte colPins[COLS] = {12, 11, 10};
+byte red = 1, blue = 2, green = 3; // LED
+byte echo = 4, trig = 5; // Ping Sensor
+byte buzz = 6; // Buzzer
+byte rowPins[ROWS] = {13, 12, 11, 10};
+byte colPins[COLS] = {9, 8, 7};
 
 // Analog
 LiquidCrystal_I2C lcd(0x27,16,2); // LCD Screen
-int lit = 2; // Motion Sensor
+byte lit = 2; // Motion Sensor
 
 Keypad newpad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
@@ -33,21 +33,29 @@ void setup() {
   pinMode(echo,INPUT);
   pinMode(trig,OUTPUT);
   //pinMode(lit,INPUT);
+  
   lcd.init();
   lcd.backlight();
   //lcd.setCursor(0,0);
   //lcd.print("Ardiuino");
+
+  byte h = 0;
+  while(h == 0) {
+    h = Serial.parseInt();
+    Serial.println(h);
+  }
 }
 
 void loop() {
   
 }
   //LCD Screen base
+  //lcd.clear();
   //lcd.setCursor(0,0);
   //lcd.print("Ardiuino");
 
   //Keypad base 
-  //char customKey = customKeypad.getKey();
+  //char customKey = newpad.getKey();
   //if(customKey) Serial.println(customKey);
 
   //Ping Sensor base
