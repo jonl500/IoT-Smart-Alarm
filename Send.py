@@ -11,7 +11,7 @@ def relay(recipients, subject, message):
 	__sender = 'teamozattend@gmail.com'
 	#sender emails: teamozattend@gmail.com, ozattendance@gmail.com
 
-	message = 'From: Team DevVolution <from@fromdomain.com>\nSubject: ' + str(subject) + '\n\n' + message
+	message = 'From: Group 2 <from@fromdomain.com>\nSubject: The alarm system has been triggered!' + str(subject) + '\n\n' + message
 	try:
 		with smtplib.SMTP_SSL('smtp.gmail.com', __port) as server:
 			server.login(__sender, __password)
