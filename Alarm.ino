@@ -61,6 +61,20 @@ int ping() {
   return distance;
 }
 
+bool equiv() {
+  for(int q = 0; q < 4; q++)
+    if(code[q] != pass[q])
+      return false;
+  return true;
+}
+
+void push(char lastc) {
+  code[3] = code[2];
+  code[2] = code[1];
+  code[1] = code[0];
+  code[0] = lastc;
+}
+
 void loop() {
   if(state == 0) {
     lcd.clear();
@@ -82,7 +96,10 @@ void loop() {
     state = 2;
   }
   else if(state == 2) {
-    if(code == pass) state = 1;
+    char customKey = newpad.getKey();
+    if(customKey) push(custom);
+    
+    if(equiv()) state = 1;
     else if(ping() <= 90) state = 3;
   }
 }
