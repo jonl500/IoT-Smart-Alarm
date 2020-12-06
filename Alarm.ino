@@ -25,6 +25,8 @@ byte lit = 2; // Motion Sensor
 Keypad newpad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
 byte state = 0;
+const char pass[4] = {'1', '2', '3', '4'};
+char code[4] = {'x', 'x', 'x', 'x'};
 
 void setup() {
   Serial.begin(9600);
@@ -47,6 +49,18 @@ void setup() {
   }
 }
 
+int ping() {
+  int duration, distance;
+  digitalWrite(trig,LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+  duration = pulseIn(echo,HIGH);
+  distance = (duration/2)/29.1;
+  return distance;
+}
+
 void loop() {
   if(state == 0) {
     lcd.clear();
@@ -57,13 +71,19 @@ void loop() {
     if(customKey == '*') state = 1;
   }
   else if(state == 1) {
-    for(int ti = 20; ti > 0; ti--)
+    for(int ti = 20; ti > 0; ti--) {
       lcd.clear();
       lcd.setCursor(0,0);
       lcd.print("Arming...");
       lcd.setCursor(0,1);
       lcd.print(ti);
       delay(1000);
+    }
+    state = 2;
+  }
+  else if(state == 2) {
+    if(code == pass) state = 1;
+    else if(ping() <= 90) state = 3;
   }
 }
   //LCD Screen base
