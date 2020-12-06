@@ -32,9 +32,10 @@ while 1:
 	b = arduino.read_until(size=1)
 	if b == b'3':
 		if j == 0:
-			relay(recipients = {jlustman@oswego.edu, sabbey@oswego.edu, gantoine@oswego.edu}, "Alarm system triggered", "Your alarm system has been triggered, call the cops and go home.")
+			print("No spam?")
+			#relay(recipients = {recipients@here.place}, "Alarm system triggered", "Your alarm system has been triggered, call the cops and go home.")
 			j = 1
 	if b == b'4':
-		 relay(recipients = {jlustman@oswego.edu, sabbey@oswego.edu, gantoine@oswego.edu}, "Alarm system disabled", "Your alarm system has been disabled.")
-
+		# relay(recipients = {recipients@here.place}, "Alarm system disabled", "Your alarm system has been disabled.")
+		print("No spam?")
 arduino.close()
