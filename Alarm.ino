@@ -25,6 +25,7 @@ byte lit = 2; // Motion Sensor
 Keypad newpad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
 byte state = 0;
+bool safe = true;
 const char pass[4] = {'1', '2', '3', '4'};
 char code[4] = {'x', 'x', 'x', 'x'};
 
@@ -96,11 +97,35 @@ void loop() {
     state = 2;
   }
   else if(state == 2) {
-    char customKey = newpad.getKey();
-    if(customKey) push(custom);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Armed");
     
-    if(equiv()) state = 1;
+    char customKey = newpad.getKey();
+    if(customKey) push(customKey);
+    
+    if(equiv()) state = 0;
     else if(ping() <= 90) state = 3;
+  }
+  else if(state == 3) {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Breached");
+    
+    tone(buzz,1200,1000);
+    
+    char customKey = newpad.getKey();
+    if(customKey) push(customKey);
+    
+    if(safe) {
+      Serial.println("3");
+      safe = false;
+    }
+    else if(equiv()) {
+      Serial.println("4");
+      safe = true;
+      state = 0;
+    }
   }
 }
   //LCD Screen base
