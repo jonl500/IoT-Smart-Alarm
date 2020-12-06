@@ -1,5 +1,8 @@
 import smtplib
 import ssl
+import serial
+import time
+
 
 #recipients is a list of emails
 def relay(recipients, subject, message):
@@ -7,7 +10,7 @@ def relay(recipients, subject, message):
 	__password = 'qwerty357K!'
 	__sender = 'teamozattend@gmail.com'
 	#sender emails: teamozattend@gmail.com, ozattendance@gmail.com
-	
+
 	message = 'From: Team DevVolution <from@fromdomain.com>\nSubject: ' + str(subject) + '\n\n' + message
 	try:
 		with smtplib.SMTP_SSL('smtp.gmail.com', __port) as server:
@@ -17,3 +20,21 @@ def relay(recipients, subject, message):
 	except Exception as e:
 		print("Error: unable to send email")
 		print(e)
+
+
+arduino = serial.Serial('/dev/ttyACM0', 9600)
+time.sleep(2) # Need 2s delay after declaration of arduino
+arduino.write(b'51')
+stream = []
+j = 0
+
+while 1:
+	b = arduino.read_until(size=1)
+	if b == b'3':
+		if j == 0:
+			relay(recipients = {jlustman@oswego.edu, sabbey@oswego.edu, gantoine@oswego.edu}, "Alarm system triggered", "Your alarm system has been triggered, call the cops and go home.")
+			j = 1
+	if b == b'4':
+		 relay(recipients = {jlustman@oswego.edu, sabbey@oswego.edu, gantoine@oswego.edu}, "Alarm system disabled", "Your alarm system has been disabled.")
+
+arduino.close()
