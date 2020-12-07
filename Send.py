@@ -32,7 +32,7 @@ while 1:
 	if b == b'3':
 		print("No spam?")
 		# relay([recipients@here.place], "Alarm system triggered", trip)
-	else if b == b'4':
+	elif b == b'4':
 		# relay([recipients@here.place], "Alarm system disabled", dis)
 		print("No spam?")
 

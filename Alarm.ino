@@ -82,8 +82,8 @@ void loop() {
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Idle");
-    digitWrite(red,LOW);
-    digitWrite(green,HIGH);
+    digitalWrite(red,LOW);
+    digitalWrite(green,HIGH);
     state = 5;
   }
   else if(state == 5) {
@@ -97,11 +97,11 @@ void loop() {
       lcd.print("Arming...");
       lcd.setCursor(0,1);
       lcd.print(ti);
-      digitWrite(green,HIGH);
-      digitWrite(red,HIGH);
+      digitalWrite(green,HIGH);
+      digitalWrite(red,HIGH);
       delay(500);
-      digitWrite(green,LOW);
-      digitWrite(red,LOW);
+      digitalWrite(green,LOW);
+      digitalWrite(red,LOW);
       delay(500);
     }
     state = 2;
@@ -110,8 +110,8 @@ void loop() {
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Armed");
-    digitWrite(green,HIGH);
-    digitWrite(red,HIGH);
+    digitalWrite(green,HIGH);
+    digitalWrite(red,HIGH);
     state = 6;
   }
   else if(state == 6) {
@@ -125,9 +125,9 @@ void loop() {
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Breached");
-    digitWrite(green,LOW);
-    digitWrite(red,HIGH);
-    state = 6;
+    digitalWrite(green,LOW);
+    digitalWrite(red,HIGH);
+    state = 7;
   }
   if(state == 7) {
     tone(buzz,1200,1000);
