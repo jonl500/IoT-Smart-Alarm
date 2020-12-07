@@ -1,5 +1,6 @@
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
+#include <Wire.h>
 
 // Keypad Setup
 const byte ROWS = 4;
@@ -81,7 +82,11 @@ void loop() {
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Idle");
-
+    digitWrite(red,LOW);
+    digitWrite(green,HIGH);
+    state = 5;
+  }
+  else if(state == 5) {
     char customKey = newpad.getKey();
     if(customKey == '*') state = 1;
   }
@@ -92,7 +97,12 @@ void loop() {
       lcd.print("Arming...");
       lcd.setCursor(0,1);
       lcd.print(ti);
-      delay(1000);
+      digitWrite(green,HIGH);
+      digitWrite(red,HIGH);
+      delay(500);
+      digitWrite(green,LOW);
+      digitWrite(red,LOW);
+      delay(500);
     }
     state = 2;
   }
@@ -100,7 +110,11 @@ void loop() {
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Armed");
-    
+    digitWrite(green,HIGH);
+    digitWrite(red,HIGH);
+    state = 6;
+  }
+  else if(state == 6) {
     char customKey = newpad.getKey();
     if(customKey) push(customKey);
     
@@ -111,7 +125,11 @@ void loop() {
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Breached");
-    
+    digitWrite(green,LOW);
+    digitWrite(red,HIGH);
+    state = 6;
+  }
+  if(state == 7) {
     tone(buzz,1200,1000);
     
     char customKey = newpad.getKey();
