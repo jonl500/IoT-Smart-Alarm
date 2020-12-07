@@ -33,9 +33,9 @@ while 1:
 	b = arduino.read_until(size=1)
 	if b == b'3':
 		print("No spam?")
-		# relay([recipients@here.place], "Alarm system triggered", trip)
+		relay(['your@email.here'], "Alarm system triggered", trip)
 	elif b == b'4':
-		# relay([recipients@here.place], "Alarm system disabled", dis)
+		relay(['your@email.here'], "Alarm system disabled", dis)
 		print("No spam?")
 
 
