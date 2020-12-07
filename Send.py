@@ -1,5 +1,7 @@
 import smtplib
 import ssl
+import serial
+import time
 
 #recipients is a list of emails
 def relay(recipients, subject, message):
@@ -7,7 +9,7 @@ def relay(recipients, subject, message):
 	__password = 'qwerty357K!'
 	__sender = 'teamozattend@gmail.com'
 	#sender emails: teamozattend@gmail.com, ozattendance@gmail.com
-	
+
 	message = 'From: Group 2 <from@fromdomain.com>\nSubject: ' + str(subject) + '\n\n' + message
 	try:
 		with smtplib.SMTP_SSL('smtp.gmail.com', __port) as server:
