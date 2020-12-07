@@ -27,7 +27,7 @@ Keypad newpad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
 byte state = 0;
 bool safe = true;
-const char pass[4] = {'1', '2', '3', '4'};
+const char pass[4] = {'4', '3', '2', '1'};
 char code[4] = {'x', 'x', 'x', 'x'};
 
 void setup() {
@@ -38,7 +38,7 @@ void setup() {
   pinMode(echo,INPUT);
   pinMode(trig,OUTPUT);
   //pinMode(lit,INPUT);
-  
+
   lcd.init();
   lcd.backlight();
   lcd.setCursor(0,0);
@@ -117,7 +117,7 @@ void loop() {
   else if(state == 6) {
     char customKey = newpad.getKey();
     if(customKey) push(customKey);
-    
+
     if(equiv()) state = 0;
     else if(ping() <= 90) state = 3;
   }
@@ -131,10 +131,10 @@ void loop() {
   }
   if(state == 7) {
     tone(buzz,1200,1000);
-    
+
     char customKey = newpad.getKey();
     if(customKey) push(customKey);
-    
+
     if(safe) {
       Serial.println("3");
       safe = false;
@@ -142,6 +142,7 @@ void loop() {
     else if(equiv()) {
       Serial.println("4");
       safe = true;
+      push('x');
       state = 0;
     }
   }
@@ -151,7 +152,7 @@ void loop() {
   //lcd.setCursor(0,0);
   //lcd.print("Ardiuino");
 
-  //Keypad base 
+  //Keypad base
   //char customKey = newpad.getKey();
   //if(customKey) Serial.println(customKey);
 
@@ -164,7 +165,7 @@ void loop() {
   //digitalWrite(trig,LOW);
   //duration = pulseIn(echo,HIGH);
   //distance = (duration/2)/29.1;
-  
+
   //Buzzer base
   //tone(buzz,1200,1000)
   //tone(buzz,1200);
