@@ -100,7 +100,7 @@ void loop() {
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Armed");
-    
+    digitalWrite(green,HIGH);
     char customKey = newpad.getKey();
     if(customKey) push(customKey);
     
@@ -113,6 +113,7 @@ void loop() {
     lcd.print("Breached");
     
     tone(buzz,1200,1000);
+    digitalWrite(green,LOW);
     digitalWrite(red,HIGH);
     
     char customKey = newpad.getKey();
