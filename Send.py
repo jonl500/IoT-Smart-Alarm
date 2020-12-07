@@ -22,7 +22,7 @@ def relay(recipients, subject, message):
 		print(e)
 
 
-arduino = serial.Serial('/dev/ttyACM0', 9600)
+arduino = serial.Serial('/dev/ttyUSB0', 9600)
 time.sleep(2) # Need 2s delay after declaration of arduino
 arduino.write(b'51')
 stream = []
@@ -30,6 +30,8 @@ j = 0
 
 while 1:
 	b = arduino.read_until(size=1)
+	if b == b'2':
+		print("armed")
 	if b == b'3':
 		if j == 0:
 			print("No spam?")

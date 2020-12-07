@@ -105,7 +105,7 @@ void loop() {
     if(customKey) push(customKey);
     
     if(equiv()) state = 0;
-    else if(ping() <= 90) state = 3;
+    else if(ping() <= 5) state = 3;
   }
   else if(state == 3) {
     lcd.clear();
@@ -113,6 +113,7 @@ void loop() {
     lcd.print("Breached");
     
     tone(buzz,1200,1000);
+    digitalWrite(red,HIGH);
     
     char customKey = newpad.getKey();
     if(customKey) push(customKey);
